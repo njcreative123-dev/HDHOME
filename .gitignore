@@ -1,0 +1,28 @@
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Logs & runtime
+*.log
+logs/*
+!logs/.gitkeep
+tmp/
+cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+*.code-workspace
+
+# Composer / vendor
+/vendor/
+composer.lock
+
+# Deployment artifacts
+*.zip
+*.tar.gz
+deploy/

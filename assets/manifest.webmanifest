@@ -1,0 +1,22 @@
+{
+  "name": "HDHome Live TV",
+  "short_name": "HDHome",
+  "description": "Free Live TV Streaming Platform - watch channels anywhere",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0d1a",
+  "theme_color": "#6c5ce7",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
