@@ -54,7 +54,7 @@ require_once APP_ROOT . '/includes/performance.php';
 enableGzip();
 enableOutputBuffer();
 setSecurityHeaders();
-REQUEST_START = microtime(true);
+define("REQUEST_START", microtime(true));
 
 // --- Smart Cron (InfinityFree workaround) ---
 infinityFreeCron();
