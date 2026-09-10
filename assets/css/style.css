@@ -571,3 +571,561 @@ textarea.form-control { resize: vertical; min-height: 90px; font-family: var(--f
 
     .player-modal { padding: 10px; }
 }
+
+/* ============================================
+   HDHome v2.1 - Enhanced Features CSS
+   ============================================ */
+
+/* ---- Light Theme ---- */
+[data-theme="light"] {
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --text-primary: #1a1a2e;
+    --text-secondary: #555;
+    --border-color: #e0e0e0;
+    --accent: #6c5ce7;
+    --accent-hover: #5a4bd1;
+    --glass-bg: rgba(255,255,255,0.85);
+    --glass-border: rgba(0,0,0,0.08);
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+/* ---- Favorites Button ---- */
+.fav-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 5;
+}
+.fav-btn:hover {
+    background: rgba(0,0,0,0.7);
+    transform: scale(1.15);
+}
+.fav-btn.fav-active {
+    background: rgba(255,50,50,0.8);
+}
+
+/* ---- Share Button ---- */
+.share-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 5;
+}
+.share-btn:hover {
+    background: rgba(0,0,0,0.7);
+    transform: scale(1.15);
+}
+
+/* ---- Recently Watched Section ---- */
+.recent-section {
+    padding: 20px 0;
+}
+.recent-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    color: var(--text-primary, #f1f1f7);
+}
+.recent-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+}
+.recent-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+.recent-scroll::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 2px;
+}
+.recent-card {
+    flex: 0 0 140px;
+    scroll-snap-align: start;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.recent-card:hover {
+    transform: translateY(-4px);
+}
+.recent-card img,
+.recent-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 8px;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #fff;
+}
+.recent-placeholder {
+    font-size: 1.4rem;
+}
+.recent-name {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+    color: var(--text-primary, #f1f1f7);
+}
+.recent-time {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-secondary, #9b9bb4);
+}
+
+/* ---- Keyboard Shortcut Hints ---- */
+.kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-family: monospace;
+    color: rgba(255,255,255,0.7);
+}
+
+/* ---- Stream Health Badge ---- */
+.badge--live { background: #ef4444; }
+.badge--offline { background: #6b7280; }
+.badge--featured { background: var(--accent); }
+.badge--new { background: #10b981; }
+
+/* ---- Toast Notification ---- */
+.hd-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(30,30,50,0.95);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+.hd-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ---- Theme Toggle Button ---- */
+#themeToggle {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+#themeToggle:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ---- PiP Button ---- */
+.pip-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 14px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+    z-index: 10;
+}
+.pip-btn:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+/* ---- Quality Selector ---- */
+#qualitySelector {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+}
+.quality-btn {
+    padding: 4px 10px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+}
+.quality-btn.active,
+.quality-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+/* ---- Trending Badge ---- */
+.trending-icon {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    z-index: 5;
+}
+
+/* ---- Offline/Loading Overlay ---- */
+.channel-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.channel-card:hover .channel-card-overlay {
+    opacity: 1;
+}
+
+/* ---- Shimmer Loading ---- */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+.skeleton {
+    background: linear-gradient(90deg, var(--bg-card, #1b1b33) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card, #1b1b33) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 12px;
+    height: 200px;
+}
+
+/* ---- Footer Shortcuts ---- */
+.shortcuts-bar {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    padding: 12px;
+    font-size: 0.78rem;
+    color: var(--text-secondary, #9b9bb4);
+    flex-wrap: wrap;
+}
+.shortcuts-bar span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ---- Ad Banner Placeholder (for future) ---- */
+.ad-banner {
+    width: 100%;
+    min-height: 90px;
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.8rem;
+    margin: 16px 0;
+}
+
+/* ---- Scroll to Top ---- */
+.scroll-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(108,92,231,0.4);
+    z-index: 100;
+    transition: all 0.3s;
+}
+.scroll-top.visible {
+    display: flex;
+}
+.scroll-top:hover {
+    transform: translateY(-3px);
+}
+
+/* ---- Reading Progress Bar ---- */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #00d4ff);
+    z-index: 9999;
+    transition: width 0.1s;
+}
+
+/* ---- Notification Bell ---- */
+.notif-bell {
+    position: relative;
+    cursor: pointer;
+}
+.notif-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 0.6rem;
+    padding: 1px 4px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+/* ---- Age Rating Badge ---- */
+.badge--rated {
+    background: #374151;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+}
+
+/* ---- Multi-language Support ---- */
+[data-lang="hi"] .nav-brand::after { content: ' 🇮🇳'; }
+[data-lang="ar"] { direction: rtl; }
+[data-lang="ar"] .channel-card { direction: rtl; }
+
+/* ---- Print Styles ---- */
+@media print {
+    .nav, .hero, .search-bar, .categories-bar, .fav-btn, .share-btn, .hd-toast { display: none !important; }
+    .channel-card { break-inside: avoid; border: 1px solid #ccc; }
+}
+
+/* ============================================
+   Player Enhancements - EPG, PiP, Controls
+   ============================================ */
+
+/* ---- Player Controls Top Bar ---- */
+.player-controls-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.player-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.player-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ---- Player Header ---- */
+.player-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 12px 12px 0 0;
+}
+.player-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+}
+
+/* ---- Player Container ---- */
+.player-container {
+    max-width: 900px;
+    width: 95%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+.player-wrap {
+    position: relative;
+    background: #000;
+}
+.player-wrap video {
+    width: 100%;
+    display: block;
+}
+
+/* ---- Player Status ---- */
+.player-status {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.player-status.visible {
+    opacity: 1;
+}
+
+/* ---- EPG Display in Player ---- */
+.player-epg {
+    padding: 10px 16px;
+    background: rgba(0,0,0,0.9);
+    border-radius: 0 0 12px 12px;
+    min-height: 0;
+}
+.epg-now {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #e0e0e0;
+}
+.epg-badge {
+    background: #ef4444;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+.epg-time {
+    color: #9b9bb4;
+    font-size: 0.78rem;
+    margin-left: auto;
+}
+
+/* ---- Player Backdrop ---- */
+.player-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.player-modal.open .player-backdrop {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ---- Player Modal ---- */
+.player-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.player-modal.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ---- Player Close Button ---- */
+.player-close {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.player-close:hover {
+    background: rgba(239,68,68,0.5);
+}

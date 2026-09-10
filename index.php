@@ -114,6 +114,15 @@ $csrfToken = Auth::csrfToken();
     </div>
 </section>
 
+
+<!-- Recently Watched -->
+<section class="recent-section" id="recentSection">
+    <div class="container">
+        <h2>Recently Watched</h2>
+        <div class="recent-scroll" id="recentScroll"></div>
+    </div>
+</section>
+
 <!-- Channel grid -->
 <section class="channels-section" id="channels">
     <div class="container">
@@ -136,6 +145,8 @@ $csrfToken = Auth::csrfToken();
                                 <span class="badge badge--featured">★ Featured</span>
                             <?php endif; ?>
                             <span class="badge badge--live">● LIVE</span>
+                            <button class="fav-btn" data-id="<?= (int) $ch['id'] ?>" aria-label="Toggle favorite">🤍</button>
+                            <button class="share-btn" data-name="<?= e($ch['name']) ?>" data-url="<?= e($ch['stream_url']) ?>" aria-label="Share">📤</button>
                         </div>
                         <div class="channel-card-body">
                             <h3 class="channel-card-title" title="<?= e($ch['name']) ?>"><?= e($ch['name']) ?></h3>
@@ -192,5 +203,64 @@ window.HDHOME = {
 <script src="/assets/js/api.js" defer></script>
 <script src="/assets/js/player.js" defer></script>
 <script src="/assets/js/app.js" defer></script>
+<script src="/assets/js/favorites.js" defer></script>
+<script src="/assets/js/theme.js" defer></script>
+
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+<!-- Keyboard Shortcuts -->
+<div class="shortcuts-bar">
+    <span><kbd class="kbd">/</kbd> Search</span>
+    <span><kbd class="kbd">P</kbd> PiP</span>
+    <span><kbd class="kbd">F</kbd> Fullscreen</span>
+    <span><kbd class="kbd">M</kbd> Mute</span>
+    <span><kbd class="kbd">Esc</kbd> Close</span>
+</div>
+
+
+<!-- Init features -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Init favorites
+    if (window.HDFavorites) HDFavorites.initAll();
+    
+    // Init recently watched
+    if (window.HDRecent) {
+        var recentContainer = document.getElementById('recentScroll');
+        if (recentContainer) HDRecent.render(recentContainer);
+    }
+    
+    // Init share buttons
+    document.querySelectorAll('.share-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (window.HDShare) HDShare.share(btn.dataset.name, btn.dataset.url);
+        });
+    });
+    
+    // Scroll to top
+    var scrollBtn = document.getElementById('scrollTop');
+    if (scrollBtn) {
+        window.addEventListener('scroll', function() {
+            scrollBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+        scrollBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+    
+    // Track recently watched on player open
+    var origPlayerOpen = window.Player && Player.open;
+    if (origPlayerOpen) {
+        Player.open = function(url, name) {
+            origPlayerOpen.call(this, url, name);
+            var card = document.querySelector('.channel-card[data-url="' + CSS.escape(url) + '"]');
+            if (card && window.HDRecent) {
+                HDRecent.add(parseInt(card.dataset.id), name, '', url);
+            }
+        };
+    }
+});
+</script>
 </body>
 </html>

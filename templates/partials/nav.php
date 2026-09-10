@@ -9,8 +9,11 @@
             <a href="/#channels" class="nav-link <?= ($activePage ?? '') === 'channels' ? 'active' : '' ?>">Live TV</a>
             <a href="/admin.php" class="nav-link nav-link--admin <?= ($activePage ?? '') === 'admin' ? 'active' : '' ?>">Admin</a>
         </div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="nav-actions">
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light theme"></button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </div>
 </nav>

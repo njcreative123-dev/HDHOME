@@ -37,7 +37,7 @@ $parts    = explode('/', $endpoint);
 // --- Route to handler --------------------------------------------------------
 $handler = $parts[0] ?? '';
 
-$validHandlers = ['auth', 'channels', 'categories', 'ai', 'stats', 'system', 'settings'];
+$validHandlers = ['auth', 'channels', 'categories', 'ai', 'stats', 'system', 'settings', 'epg', 'favorites'];
 
 if (!in_array($handler, $validHandlers, true)) {
     jsonResponse([
@@ -67,5 +67,9 @@ require_once APP_ROOT . '/src/classes/AIAgent.php';
 require_once APP_ROOT . '/src/middleware/CorsMiddleware.php';
 require_once APP_ROOT . '/src/middleware/RateLimiter.php';
 require_once APP_ROOT . '/src/middleware/AuthMiddleware.php';
+
+
+require_once APP_ROOT . '/src/classes/EPGManager.php';
+require_once APP_ROOT . '/src/classes/SecurityManager.php';
 
 require $handlerFile;

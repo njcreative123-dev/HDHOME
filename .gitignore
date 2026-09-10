@@ -1,28 +1,14 @@
-# Environment & secrets
+node_modules/
 .env
-.env.*
-!.env.example
-
-# Logs & runtime
+logs/
+backups/
 *.log
-logs/*
-!logs/.gitkeep
-tmp/
-cache/
-
-# OS / editor
-.DS_Store
-Thumbs.db
-*.swp
-.idea/
-.vscode/
-*.code-workspace
-
-# Composer / vendor
-/vendor/
-composer.lock
-
-# Deployment artifacts
-*.zip
-*.tar.gz
-deploy/
+*.tmp
+.git
+.gitignore
+auto-engine.sh
+hdagent.sh
+KNOWLEDGE_BASE.md
+INFINITYFREE_GUIDE.md
+*.mjs
+package-lock.json

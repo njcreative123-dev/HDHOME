@@ -48,8 +48,35 @@ if (session_status() === PHP_SESSION_NONE) {
     }
 }
 
+
+// --- Performance Layer ---
+require_once APP_ROOT . '/includes/performance.php';
+enableGzip();
+enableOutputBuffer();
+setSecurityHeaders();
+REQUEST_START = microtime(true);
+
+// --- Smart Cron (InfinityFree workaround) ---
+infinityFreeCron();
+
+// --- Attack Detection ---
+$allInput = array_merge($_GET, $_POST, ['uri' => $_SERVER['REQUEST_URI'] ?? '']);
+foreach ($allInput as $val) {
+    if (is_string($val)) {
+        $attack = SecurityManager::detectAttack($val);
+        if ($attack !== null) {
+            SecurityManager::logEvent($attack, "Attack detected: $attack");
+            http_response_code(403);
+            jsonResponse(['success' => false, 'error' => ['message' => 'Request blocked', 'code' => 'BLOCKED']], 403);
+        }
+    }
+}
+
 // --- Helper functions (always loaded, no DB needed) -------------------------
 require APP_ROOT . '/includes/functions.php';
+
+// --- Security Manager ---
+require_once APP_ROOT . '/src/classes/SecurityManager.php';
 
 // --- Database (DEFENSIVE - don't crash if unavailable) -----------------------
 $dbConnected = false;
