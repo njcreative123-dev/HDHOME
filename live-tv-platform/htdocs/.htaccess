@@ -1,0 +1,84 @@
+# ================================================================
+# HDHome - Apache Configuration (.htaccess)
+# ================================================================
+# Optimized for InfinityFree hosting environment.
+# ================================================================
+
+# Enable URL rewriting
+RewriteEngine On
+
+# Route all requests through the front controller
+# This enables clean URLs like /watch?channel=bbc-news
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^watch/?$ watch.php [L,QSA]
+RewriteRule ^channels/?$ channels.php [L,QSA]
+RewriteRule ^login/?$ login.php [L,QSA]
+RewriteRule ^register/?$ register.php [L,QSA]
+
+# Prevent access to sensitive directories
+RewriteRule ^config/ - [F,L]
+RewriteRule ^database/ - [F,L]
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^src/ - [F,L]
+RewriteRule ^storage/ - [F,L]
+RewriteRule ^vendor/ - [F,L]
+
+# Block access to hidden files (including .htaccess itself)
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>
+
+# Block access to config files
+<FilesMatch "(config\.php|env\.example\.php|setup\.sql|\.env)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Enable compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 7 days"
+    ExpiresByType image/jpeg "access plus 7 days"
+    ExpiresByType image/png "access plus 7 days"
+    ExpiresByType image/gif "access plus 7 days"
+    ExpiresByType image/svg+xml "access plus 7 days"
+    ExpiresByType image/x-icon "access plus 30 days"
+    ExpiresByType text/css "access plus 3 days"
+    ExpiresByType application/javascript "access plus 3 days"
+</IfModule>
+
+# Prevent hotlinking (optional - uncomment to enable)
+# RewriteCond %{HTTP_REFERER} !^$
+# RewriteCond %{HTTP_REFERER} !^https?://(www\.)?hdhome\.free\.je [NC]
+# RewriteRule \.(m3u8|mpd|jpg|png|gif|css|js)$ - [F,NC,L]
+
+# Increase upload limit for stream imports
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
+php_value max_execution_time 300
+php_value memory_limit 256M
+
+# Error document
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.php

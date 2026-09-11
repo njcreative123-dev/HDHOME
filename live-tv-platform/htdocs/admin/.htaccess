@@ -1,0 +1,41 @@
+# ================================================================
+# .htaccess for Admin Panel
+# ================================================================
+# Additional security restrictions for admin routes.
+# ================================================================
+
+RewriteEngine On
+
+# Force HTTPS for admin panel (important for credential security)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Same route rewriting as main .htaccess
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^login/?$ login.php [L,QSA]
+RewriteRule ^index/?$ index.php [L,QSA]
+RewriteRule ^channels/?$ channels.php [L,QSA]
+RewriteRule ^categories/?$ categories.php [L,QSA]
+RewriteRule ^users/?$ users.php [L,QSA]
+RewriteRule ^system/?$ system.php [L,QSA]
+RewriteRule ^settings/?$ settings.php [L,QSA]
+
+# Rate limit admin access
+<IfModule mod_rewrite.c>
+    RewriteMap ipcount "txt:/dev/null"
+</IfModule>
+
+# Block access to any non-PHP files in admin (images, etc.)
+<FilesMatch "\.(sql|log|env|json|ini|sh|bash)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://openrouter.ai;"
+</IfModule>

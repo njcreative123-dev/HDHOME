@@ -1,0 +1,45 @@
+# ================================================================
+# Git Ignore
+# ================================================================
+
+# Configuration - contains sensitive credentials
+config/config.php
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Storage - logs, cache, uploads (generated at runtime)
+storage/logs/
+!storage/logs/.gitkeep
+storage/cache/
+!storage/cache/.gitkeep
+storage/uploads/
+
+# Composer dependencies
+vendor/
+composer.lock
+
+# PHP
+*.log
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+node_modules/
+dist/
+
+# Credentials
+*.pem
+*.key

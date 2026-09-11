@@ -13,17 +13,17 @@ class Logger
     private const LOG_FILE = __DIR__ . '/../storage/logs/app.log';
     private const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
-    public static function log(string $level, string $message, array $context = []): void
+    public static function log(string $level, string $message, array $context = [], string $source = 'app'): void
     {
         if (!defined('LOG_MAX_LEVEL') || self::shouldLog($level)) {
             self::rotateIfNeeded();
             $timestamp = date('Y-m-d H:i:s');
             $ip = self::getClientIp();
             $contextJson = !empty($context) ? json_encode($context, JSON_UNESCAPED_SLASHES) : '';
-            $logLine = "[{$timestamp}] [{$level}] [IP:{$ip}] {$message}" . ($contextJson ? " | Context: {$contextJson}" : '') . "\n";
+            $logLine = "[{$timestamp}] [{$level}] [{$source}] [IP:{$ip}] {$message}" . ($contextJson ? " | Context: {$contextJson}" : '') . "\n";
 
             error_log($logLine, 3, self::LOG_FILE);
-            self::storeInDb($level, $message, $context);
+            self::storeInDb($level, $message, $context, $source);
         }
     }
 
@@ -35,14 +35,14 @@ class Logger
         return $current >= $threshold;
     }
 
-    private static function storeInDb(string $level, string $message, array $context = []): void
+    private static function storeInDb(string $level, string $message, array $context = [], string $source = 'app'): void
     {
         if (DB_HOST === '' || !self::isDbAvailable()) {
             return;
         }
         try {
             $sql = "INSERT INTO maintenance_logs (type, source, message, details) VALUES (?, ?, ?, ?)";
-            Database::query($sql, [$level, 'app', $message, !empty($context) ? json_encode($context) : null]);
+            Database::query($sql, [$level, $source, $message, !empty($context) ? json_encode($context) : null]);
         } catch (\PDOException $e) {
             // Silently fail - file log already captured
         }
